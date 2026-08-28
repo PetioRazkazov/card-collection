@@ -40,3 +40,28 @@ test('validateLogin returns errors for empty email and password', () => {
   expect(errors.email).toBe('Please enter a valid email address.')
   expect(errors.password).toBe('Password must be at least 8 characters long.')
 })
+
+test('validateLogin accepts a password with exactly 8 characters', () => {
+  const errors = validateLogin('test@gmail.com', '12345678')
+  expect(errors.password).toBe('')
+})
+
+test('validateLogin accepts uppercase email addresses', () => {
+  const errors = validateLogin('TEST@GMAIL.COM', 'validpassword')
+  expect(errors.email).toBe('')
+})
+
+test('validateLogin rejects an email without a domain extension', () => {
+  const errors = validateLogin('test@gmail', 'validpassword')
+  expect(errors.email).toBe('Please enter a valid email address.')
+})
+
+test('validateLogin rejects a password containing only spaces', () => {
+  const errors = validateLogin('test@gmail.com', '        ')
+  expect(errors.password).toBe('Password must be at least 8 characters long.')
+})
+
+test('validateLogin preserves meaningful leading and trailing password spaces', () => {
+  const errors = validateLogin('test@gmail.com', ' password ')
+  expect(errors.password).toBe('')
+})

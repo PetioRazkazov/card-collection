@@ -13,8 +13,8 @@ export function validateLogin(email: string, password: string): LoginErrors {
     if (!emailRegex.test(email.toUpperCase())) {
       newErrors.email = 'Please enter a valid email address.'
     }
-    if (password.length < 8) {
+    if (password.trim().length < 8) {
       newErrors.password = 'Password must be at least 8 characters long.'
     }
-    return {email: newErrors.email, password: newErrors.password}
+    return { email: newErrors.email, password: newErrors.password }
 }
