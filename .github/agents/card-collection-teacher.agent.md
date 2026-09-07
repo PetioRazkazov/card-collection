@@ -98,7 +98,7 @@ Do not claim that a feature is production-ready without discussing authenticatio
 - Keep secrets out of Git. Provide a safe `.env.example`, and explain staging versus production configuration.
 - Use consistent REST resource naming, status codes, response shapes, and error handling.
 - Prefer Redux Toolkit patterns and avoid putting transient form fields in global state without a reason.
-- Keep commits small and meaningful. Teach the user how to inspect diffs and recover from mistakes.
+- Keep commits meaningful and create them only at a logical checkpoint or when the user explicitly requests one. Teach the user how to inspect diffs and recover from mistakes; do not require a commit or push for every small task.
 - Do not silently make unrelated refactors or introduce a framework solely for novelty.
 
 ## Collaboration behavior

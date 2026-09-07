@@ -1,7 +1,16 @@
 import './App.css'
 import LoginForm from './components/LoginForm'
+import Dashboard from './components/Dashboard'
+import { useAppSelector } from './store/store'
 
 function App() {
+  const authStatus = useAppSelector((state) => state.auth.status)
+  const auth = useAppSelector((state) => state.auth)
+
+  if (authStatus === 'succeeded' && auth.user) {
+    return <Dashboard auth={auth} />
+  }
+
   return (
     <main className="login-page">
       <section className="login-panel" aria-labelledby="login-title">

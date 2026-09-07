@@ -2,6 +2,8 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import '../App.css'
 import { validateLogin } from '../validation'
+import { useAppDispatch, useAppSelector } from '../store/store'
+import { loginStart, loginSuccess } from '../store/authSlice'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -12,6 +14,9 @@ function LoginForm() {
     password: '',
   })
 
+const dispatch = useAppDispatch()
+const authStatus = useAppSelector((state) => state.auth.status)
+
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -19,7 +24,11 @@ function LoginForm() {
     const newErrors = validateLogin(email, password)
     setErrors(newErrors)
     if (!newErrors.email && !newErrors.password) {
-      setIsSubmitted(true)
+        dispatch(loginStart())
+            setTimeout(() => {
+                dispatch(loginSuccess({ accessToken: 'dummy-token', user: email }))
+            }, 400)
+        setIsSubmitted(true)
     }
   }
 
@@ -75,7 +84,9 @@ function LoginForm() {
               </p>
             )}
           </div>
-          <button type="submit">Sign in</button>
+          <button type="submit" disabled={authStatus === 'loading'}>
+            {authStatus === 'loading' ? 'Signing in…' : 'Sign in'}
+          </button>
           {isSubmitted && (
             <p className="form-message" role="status">
               The API login will connect here next.
