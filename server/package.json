@@ -5,17 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "migrate:up": "tsx src/migrate.ts up",
+    "migrate:down": "tsx src/migrate.ts down",
     "build": "tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.5",
     "@types/express": "^5.0.0",
     "@types/node": "^22.15.21",
+    "@types/pg": "^8.23.1",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }

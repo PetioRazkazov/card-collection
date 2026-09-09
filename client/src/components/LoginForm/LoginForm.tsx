@@ -9,7 +9,6 @@ import axios from 'axios'
 function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState({
     email: '',
     password: '',
@@ -28,7 +27,7 @@ function LoginForm() {
 
     if (!newErrors.email && !newErrors.password) {
       dispatch(loginStart())
-      setIsSubmitted(true)
+
 
       try {
         const response = await axios.post(loginUrl, { email, password })
@@ -58,7 +57,6 @@ function LoginForm() {
           value={email}
           onChange={(event) => {
             setEmail(event.target.value)
-            setIsSubmitted(false)
           }}
           required
         />
@@ -79,7 +77,6 @@ function LoginForm() {
           value={password}
           onChange={(event) => {
             setPassword(event.target.value)
-            setIsSubmitted(false)
           }}
           required
         />
@@ -106,12 +103,6 @@ function LoginForm() {
       <button type="submit" disabled={authStatus === 'loading'}>
         {authStatus === 'loading' ? 'Signing in...' : 'Sign in'}
       </button>
-
-      {isSubmitted && authStatus !== 'loading' && authStatus !== 'failed' && (
-        <p className="form-message" role="status">
-          The API login will connect here next.
-        </p>
-      )}
     </form>
   )
 }

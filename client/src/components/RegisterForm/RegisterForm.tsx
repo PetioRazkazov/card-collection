@@ -3,6 +3,7 @@ import './registerform.css'
 import { validateRegister } from '../../validation'
 import { useAppDispatch, useAppSelector } from '../../store/store'
 import { clearError, registerFailure, registerSuccess } from '../../store/registerSlice'
+import axios from 'axios'
 
 function RegisterForm({
   onRegistered,
@@ -20,11 +21,11 @@ function RegisterForm({
     password: '',
     passwordConfirm: '',
   })
-
+  const registerUrl = 'http://localhost:3000/api/auth/register'
   const dispatch = useAppDispatch()
   const userError = useAppSelector((state) => state.user.error)
 
-  function handleRegisterSubmit(event: FormEvent<HTMLFormElement>) {
+   async function handleRegisterSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const newErrors = validateRegister(email, password, passwordConfirm)
@@ -32,13 +33,21 @@ function RegisterForm({
 
     if (!newErrors.email && !newErrors.password && !newErrors.passwordConfirm) {
       dispatch(clearError())
-      dispatch(registerSuccess({ user: email, password }))
-      setIsSubmitted(true)
-      onRegistered()
+
+      try {
+        dispatch(registerSuccess({ user: email, password }))
+        setIsSubmitted(true)
+        onRegistered()
+        await axios.post(registerUrl, { email, password })
+
+        dispatch(registerSuccess({ user: email, password }))
+        } catch (error) {
+          console.error('Registration failed:', error)
+          dispatch(registerFailure('Registration failed. Please check your input and try again.'))
+        }
       return
     }
 
-    dispatch(registerFailure('Registration failed. Please check your input and try again.'))
   }
 
   return (
