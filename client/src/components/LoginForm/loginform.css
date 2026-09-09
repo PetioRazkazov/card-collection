@@ -14,7 +14,7 @@
   padding: 3rem 0;
 }
 
-.eyebrow {
+.login-panel .eyebrow {
   margin: 0 0 1.25rem;
   color: #c75b3d;
   font-size: 0.76rem;
@@ -23,7 +23,7 @@
   text-transform: uppercase;
 }
 
-h1 {
+.login-panel h1 {
   max-width: 8ch;
   margin: 0;
   color: #17231f;
@@ -39,7 +39,8 @@ h1 {
   font-size: 1rem;
 }
 
-form {
+.login-panel form,
+.register-panel form {
   display: grid;
   gap: 1.25rem;
 }
@@ -56,20 +57,21 @@ form {
   gap: 1rem;
 }
 
-label {
+.field label {
   color: #17231f;
   font-size: 0.84rem;
   font-weight: 700;
 }
 
-a {
+.login-panel a,
+.register-panel a {
   color: #b34e35;
   font-size: 0.82rem;
   font-weight: 700;
   text-underline-offset: 0.2em;
 }
 
-input {
+.field input {
   box-sizing: border-box;
   width: 100%;
   border: 1px solid #c9c5b9;
@@ -80,13 +82,14 @@ input {
   padding: 0.85rem 0.9rem;
 }
 
-input:focus {
+.field input:focus {
   border-color: #c75b3d;
   outline: 3px solid rgba(199, 91, 61, 0.2);
   outline-offset: 1px;
 }
 
-button {
+.login-panel button,
+.register-panel button {
   margin-top: 0.5rem;
   border: 0;
   border-radius: 2px;
@@ -100,20 +103,32 @@ button {
   transition: background 160ms ease, transform 160ms ease;
 }
 
-button:hover {
+.login-panel button:not(:disabled):hover,
+.register-panel button:not(:disabled):hover {
   background: #c75b3d;
   transform: translateY(-1px);
 }
 
-button:focus-visible {
+.login-panel button:disabled,
+.register-panel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.login-panel button:focus-visible,
+.register-panel button:focus-visible {
   outline: 3px solid rgba(199, 91, 61, 0.45);
   outline-offset: 3px;
 }
 
-.form-message {
+.form-message,
+.error-message {
   margin: 0;
-  color: #64716b;
   font-size: 0.82rem;
+}
+
+.form-message {
+  color: #64716b;
 }
 
 .error-messages {
@@ -122,9 +137,7 @@ button:focus-visible {
 }
 
 .error-message {
-  margin: 0;
   color: #b34e35;
-  font-size: 0.82rem;
 }
 
 .register-prompt {
